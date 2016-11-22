@@ -185,7 +185,7 @@ def convert_nse_rows_to_json(row, nse_index):
 
 def create_daily_indices_table(request):
     with connection.cursor() as cursor:
-        cursor.execute('CREATE TABLE if not exists daily_nse(date numeric(15), open numeric(10, 2), high numeric(10, 2), low numeric(10, 2), last numeric(10, 2), close numeric(10, 2), total_trade_quantity numeric(10, 2), turnover numeric(10, 2), index integer NOT NULL, foreign key (index) references indices(id), constraint pk_daily_nse primary key (date, index))')
+        cursor.execute('CREATE TABLE if not exists daily_nse(date numeric(15), open numeric(10, 2), high numeric(10, 2), low numeric(10, 2), last numeric(10, 2), close numeric(10, 2), total_trade_quantity numeric(10, 2), turnover numeric(10, 2), index integer NOT NULL, foreign key (index) references indices1(id), constraint pk_daily_nse primary key (date, index))')
         cursor.execute('select count(*) from daily_nse')
         row = cursor.fetchone()
     result = 'count of row after operation ' + str(row[0])
