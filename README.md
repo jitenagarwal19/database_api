@@ -42,7 +42,11 @@ or
 For more information about using Python on Heroku, see these Dev Center articles:
 
 - [Python on Heroku](https://devcenter.heroku.com/categories/python)
-
+##Important Python Commands
+###creating virtualenv
+    virtualenv venv
+### Starting virtualenv
+    source venv/bin/activate
 ##Important CLI for heroku
 ### To see logs
     heroku logs -a database-api

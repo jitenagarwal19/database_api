@@ -8,6 +8,8 @@ import os
 import datetime
 import time
 import math
+import sys
+from . import better_logging
 # import numpy
 
 # Create your views here.
@@ -15,7 +17,8 @@ _NSE ='NSE/'
 
 def index(request):
     r = requests.get('http://httpbin.org/status/418')
-    print r.text
+    better_logging.log_d( r.text)
+    print
     return HttpResponse('<h1>Fuck THis worked</h1><pre>' + r.text + '</pre>')
 
 def read_me_the_shit(request):
@@ -137,10 +140,10 @@ def store_dataframe_database(df, index):
                 for j in range(0, len(df_row)):
                     if type(df_row[j]).__name__ == 'float':
                         df_row[j] = round(df_row[j])
-
-                cursor.execute("insert into daily_nse values (%s, %s, %s, %s, %s, %s, %s, %s, %s)", df_row)
-
-                print ('error in ' + str(j) + 'index ' + str(index))
+                try:
+                    cursor.execute("insert into daily_nse values (%s, %s, %s, %s, %s, %s, %s, %s, %s)", df_row)
+                except:
+                    print('Error while executing ' + str(sys.exc_info()[0]) + '  ' + str(sys.exc_info()[1]))
 
 
 def is_present(request, nse_index, start_date, end_date):
