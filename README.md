@@ -42,3 +42,10 @@ or
 For more information about using Python on Heroku, see these Dev Center articles:
 
 - [Python on Heroku](https://devcenter.heroku.com/categories/python)
+
+##Important CLI for heroku
+### To see logs
+    heroku logs -a database-api
+
+### For postgres CLI
+     heroku pg:psql --app database-api
