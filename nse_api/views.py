@@ -102,12 +102,14 @@ def save_data_from_local(request):
     i = 0;
     for file in files:
         i = i + 1
-        if i > 20 or i >= len(files):
+        if i >= len(files):
             break
         index_name = _NSE + file.split('.')[0]
         # index_id = get_id_of_index(index_name)
+        print('started storing ' + str(file))
         df = pd.read_csv('nse_indices/data/'+ file)
         store_dataframe_database(df, index_name)
+        print('completed storing ' + str(file))
         # for j in range(0, len(df)):
         #     result += ('j  ' + str(df.iloc[j]) + '<br />')
         # result += '<br />' + 'str(index)' +'  ' + index_name + 'length of dataframe '+ str(len(df)) + '<br />'
