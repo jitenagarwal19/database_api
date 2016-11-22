@@ -102,7 +102,7 @@ def save_data_from_local(request):
     i = 0;
     for file in files:
         i = i + 1
-        if i > 20:
+        if i > 20 or i >= len(files):
             break
         index_name = _NSE + file.split('.')[0]
         # index_id = get_id_of_index(index_name)
@@ -111,9 +111,6 @@ def save_data_from_local(request):
         # for j in range(0, len(df)):
         #     result += ('j  ' + str(df.iloc[j]) + '<br />')
         # result += '<br />' + 'str(index)' +'  ' + index_name + 'length of dataframe '+ str(len(df)) + '<br />'
-
-
-
     return HttpResponse('phew that was close' + result)
 
 
@@ -185,3 +182,11 @@ def convert_nse_rows_to_json(row, nse_index):
     data['index_name'] = nse_index
     json_data = json.dumps(data)
     print(json_data)
+
+def create_daily_indices_table(request):
+    with connection.cursor() as cursor:
+        cursor.execute('CREATE TABLE if not exists daily_nse(date numeric(15), open numeric(10, 2), high numeric(10, 2), low numeric(10, 2), last numeric(10, 2), close numeric(10, 2), total_trade_quantity numeric(10, 2), turnover numeric(10, 2), index integer NOT NULL, foreign key (index) references indices(id), constraint pk_daily_nse primary key (date, index))')
+        cursor.execute('select count(*) from daily_nse')
+        row = cursor.fetchone()
+    result = 'count of row after operation ' + str(row[0])
+    return HttpResponse(result)
